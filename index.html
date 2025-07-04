@@ -164,7 +164,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Overview of Gated Low-rank adaptation <br> for Concept Erasure (GLoCE)</h2>
+        <h2 class="title is-3">Illustration of Continual Multiple instance learning with Enhanced Localization (CoMEL)</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="900" height="450"
@@ -174,12 +174,9 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                  Illustration of overall results of concept erasing after erasing 50 celebrities by a baseline and ours. 
-                  To preserve generation capability after concept erasing, it is essential to maintain high fidelity for remaining concepts 
-                  even when target concepts are included in same text prompts. 
-                  However, baselines often struggle to achieve the fidelity. 
-                  The proposed method, GLoCE, significantly improves this fidelity while demonstrating strong performance in efficacy, specificity, and robustness, 
-                  which are key conditions for effective erasure.
+                  In this work, we propose Continual Multiple instance learning with Enhanced Localization (CoMEL). 
+                  Compared to the baseline (ConSlide), 
+                  it alleviates forgetting of localization under multiple instance learning while effectively learning new task.
                 </p>
               </div>
           </div>
@@ -193,7 +190,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Low-rankedness of Features for a Concept in Diffusion Model</h2>
+        <h2 class="title is-3">Overview of Method Components in CoMEL</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="900" height="450"
@@ -203,16 +200,12 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                  To verify the low-rankedness of features for a concept,
-                  we collected embeddings for each layer within diffusion
-                  models from generation of a few images of concepts using SD v1.4. From a few generations of the concept,
-                  we obtained thousands of token embeddings from a single
-                  forward pass of the model and repeated multiple diffusion
-                  timesteps. Then, we analyzed the spectrum of these stacked
-                  embeddings by singular value decomposition (SVD). This figure illustrates the spectrum analysis
-                  of embeddings from diverse concepts. Notably, we observed
-                  that only a small number of singular values are significant
-                  along various concepts.
+                  Overview of Continual Multiple instance learning with Enhanced Localization (CoMEL). 
+                  It aims to alleviate the forgetting of both bag and instance classification on previous tasks under the MIL setup, 
+                  while effectively learning new tasks. It consists of three key components: 
+                  Grouped Double Attention Transformer (GDAT), 
+                  Bag Prototypes-based Pseudo-Labeling (BPPL), 
+                  and Orthogonal Weighted Low-Rank Adapatation (OWLoRA).
                 </p>
               </div>
           </div>
@@ -226,7 +219,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Closed-form LoRA for Concept Erasing via Principal Components of a Target Concept</h2>
+        <h2 class="title is-3"> Grouped Double Attention Transformer (GDAT) and Bag Prototypes-based Pseudo-Labeling (BPPL)</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
@@ -236,12 +229,13 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                  (a) Extraction of principal components for each layer in a
-                      diffusion model by generation of few samples to determine
-                      the low-rank matrices for erasing target concepts. We construct
-                      the mean and primary direction of the distribution of token embeddings of target and surrogate concepts
-                  (b) Closed-form LoRA for concept erasing. It projects the target embeddings to the low-rank subspace of
-                      mapping concepts after removing the information of target concept, inspired by linear guardedness.
+                  Components of (a) Grouped Double Attention Transformer (GDAT) and 
+                  (b) Bag Prototypes-based Pseudo-Labeling (BPPL) for enhanced localization. 
+                  GDAT utilizes two sequential efficient attention with small number of grouped tokens 
+                  by averaging instances in same region into one token. 
+                  For BPPL, we normalize the attention as predicted class probability
+                  and obtain both positive and negative prototypes for pseudo-labeling, 
+                  and then filter the pseudo-labels via the performance of bag and instance classification.
                 </p>
               </div>
           </div>
@@ -256,7 +250,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Inference-Only Update of Gate to Enhance <br> Efficacy and Specificity</h2>
+        <h2 class="title is-3">Orthogonal Weighted Low-Rank Adaptation (OWLoRA)</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="600" height="300"
@@ -266,9 +260,9 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                  Gate mechanism to enhance the efficacy for target concepts 
-                  and specificity for remaining concepts. The parameters in the
-                  gate is determined only by generation of few images.
+                  Illustration of Orthogonal Weighted Low-Rank Adaptation (OWLoRA) for continual MIL. For orthogonality of 1st task, 
+                  OWLoRA trains the full-rank weights and then extracts principal orthogonal components by singular value decomposition.
+                  For subsequent tasks, it imposes the intra- and inter-orthogonality on the bases for low-rank learnable matrices for the current task.
                 </p>
               </div>
           </div>
@@ -284,7 +278,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Qualitative Results on Celebs Erasure <br> for Prompts Only Containing One Concept</h2>
+        <h2 class="title is-3">Quantitative Results on Continual Instance Classification in MIL</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
@@ -294,8 +288,13 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                  Qualitative comparison on celebrities erasure when prompts contain either target or remaining concepts.
-                  To further verify the efficacy and specificity of the proposed method, we evaluated erasure and preservation performance across various domains with prompts only containing either target or remaining concepts.
+                  Quantitative results of CL methods on instance classification in the continual MIL setup. 
+                  The best and second best results are marked as bold and underline. 
+                  Each experiment consisted of 10 runs. 
+                  We conducted the experiments on five sequential organ datasets from combined CM-16 and PAIP. 
+                  For baselines, we applied the CL approaches upon our GDAT+BPPL, except for ConSlide. 
+                  All metrics were measured in percentage. 
+                  CoMEL achieved the highest performance across all metrics while minimizing the forgetting.
                 </p>
               </div>
           </div>
@@ -315,7 +314,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Qualitative Results on Localized Celebs Erasure</h2>
+        <h2 class="title is-3">Illustration of Continual Instance Classification over Tasks</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="900" height="450"
@@ -325,9 +324,10 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                  Qualitative results of baselines and ours on localized celebrities erasure to evaluate the fidelity of the generated images. It shows that
-                  erasing only one target concept can degrade the fidelity of image containing both target and remaining celebrity on baselines, while GLoCE
-                  effectively erase the region of features of target concepts and successfully preserves the other region.
+                   Instance-level classification accuracy over sequentially learned organs from combined CM-16 and PAIP. 
+                  Each figure shows the forgetting for a specific organ under continual MIL setup. 
+                  Task Index indicates the order of organs in the sequential tasks. 
+                  CoMEL consistently achieved superior performance across all tasks, effectively mitigating catastrophic forgetting.
                 </p>
               </div>
           </div>
@@ -343,7 +343,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Quantitative Results on Localized Celebs Erasure</h2>
+        <h2 class="title is-3">Qualitative Results on Continual Instance Classification in MIL</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
@@ -353,8 +353,12 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                   Comparison of baselines and the proposed method for image fidelity on text prompts containing target celebrities and remaining celebrities. 
-                   We measured accuracy in percentage and there harmonic mean of efficacy and specificity following MACE
+                   Qualitative results of localization across sequential organ datasets under continual MIL setup. 
+                  Each column shows localization performance on Task 1 (left) or 2 (right) 
+                  as the learned organ changes over sequential tasks. 
+                  Each row corresponds to CL methods including CoMEL. 
+                  CoMEL successfully preserved the localization quality across all tasks, 
+                  while baselines increase false positives or false negatives.
                 </p>
               </div>
           </div>
@@ -368,7 +372,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Qualitative Results on Celebs Erasure <br> for Prompts Only Containing One Concept</h2>
+        <h2 class="title is-3">Additional Qualitative Results - 1</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
@@ -378,8 +382,11 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                  Qualitative comparison on celebrities erasure when prompts contain either target or remaining concepts.
-                  To further verify the efficacy and specificity of the proposed method, we evaluated erasure and preservation performance across various domains with prompts only containing either target or remaining concepts.
+                  Additional qualitative results of localization across sequential organ datasets under the continual MIL setup. 
+                  Each column is the localization performance on Task 1 as the learned organ changes over sequential tasks. 
+                  Each row corresponds to CL methods including CoMEL. 
+                  CoMEL successfully preserved the localization quality across all tasks, 
+                  while baselines increase false positives or false negatives.
                 </p>
               </div>
           </div>
@@ -401,7 +408,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Quantitative Results on Celebs Erasure <br> for Prompts Only Containing One Concept</h2>
+        <h2 class="title is-3">Additional Qualitative Results - 2</h2>
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
@@ -411,9 +418,11 @@
 
               <div class="content has-text-justified"> 
                 <p>
-                  Quantitative results on celebrities erasure. We used CS and GCD accuracy in percentage 
-                  (ACC<sub>t</sub> for target and ACC<sub>r</sub> for remaining concepts). 
-                  We also measured FID for COCO-30K, or KID (scaled by 100) for the other remaining concepts.
+                   Additional qualitative results of localization across sequential organ datasets under the continual MIL setup. 
+                  Each column is the localization performance on Task 2 as the learned organ changes over sequential tasks. 
+                  Each row corresponds to CL methods including CoMEL. 
+                  CoMEL successfully preserved the localization quality across all tasks, 
+                  while baselines increase false positives or false negatives.
                 </p>
               </div>
           </div>
