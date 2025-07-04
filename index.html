@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Localized Concept Erasure for Text-to-Image Diffusion Models Using Training-Free Gated Low-Rank Adaptation">
+  <meta name="keywords" content="Concept erasing, Generative model, Diffusion model">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Localized Concept Erasure for Text-to-Image Diffusion Models Using Training-Free Gated Low-Rank Adaptation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+
+<!-- Sungjin Lim, Se Young Chun -->
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-widescreen">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">
+            Localized Concept Erasure for Text-to-Image Diffusion Models <wbr>Using Training-Free Gated Low-Rank Adaptation
+          </h1>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://icl.snu.ac.kr/members#h.fr65urxkwmgt">Byung Hyun Lee</a><sup>1</sup><sup>,</sup><sup>*</sup>,</span>
+            <span class="author-block">
+              <a href="https://icl.snu.ac.kr/members#h.nae4o11xddqy">Sungjin Lim</a><sup>2</sup><sup>,</sup><sup>*</sup>,</span>
+            <span class="https://icl.snu.ac.kr/members#h.vtqn6t6r1xdc">
+              <a href="https://icl.snu.ac.kr/pi">Se Young Chun</a><sup>1</sup><sup>,</sup><sup>2</sup><sup>,</sup><sup>3</sup><sup>,</sup><sup>&#8224</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Department of ECE, <sup>2</sup>IPAI, <sup>3</sup>INMC, Seoul National University</span>
+          </div>
+          <div class="is-size-10 publication-authors">
+            <span class="author-block">* Equal contribution, &#8224 Corresponding author</span>
+          </div>
+          <h3 class="title is-5 publication-title" style="margin-top: 1rem;">
+            Accepted at CVPR 2025
+          </h3>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2503.12356"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/Hyun1A/GLoCE"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Fine-tuning based concept erasing has demonstrated promising results in preventing generation of
+            harmful contents from text-to-image diffusion models by removing target concepts while preserving remaining concepts. 
+            To maintain the generation capability of diffusion models after concept erasure, 
+            it is necessary to remove only the image region containing the target concept when it locally appears in an image, 
+            leaving other regions intact. 
+            However, prior arts often compromise fidelity of the other image regions in order to erase the localized target concept appearing in a specific area, 
+            thereby reducing the overall performance of image generation. 
+            To address these limitations, we first introduce a framework called localized concept erasure, 
+            which allows for the deletion of only the specific area containing the target concept in the image while preserving the other regions. 
+            As a solution for the localized concept erasure, we propose a training-free approach, 
+            dubbed Gated Low-rank adaptation for Concept Erasure (GLoCE), 
+            that injects a lightweight module into the diffusion model. 
+            GLoCE consists of low-rank matrices and a simple gate, determined only by several generation steps for concepts without training. 
+            By directly applying GLoCE to image embeddings and designing the gate to activate only for target concepts, 
+            GLoCE can selectively remove only the region of the target concepts, even when target and remaining concepts coexist within an image. 
+            Extensive experiments demonstrated GLoCE not only improves the image fidelity to text prompts after erasing the localized target concepts, 
+            but also outperforms prior arts in efficacy, specificity, and robustness by large margin and can be extended to mass concept erasure.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</section>
+
+
+
+  
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Overview of Gated Low-rank adaptation <br> for Concept Erasure (GLoCE)</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/figure_intro.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  Illustration of overall results of concept erasing after erasing 50 celebrities by a baseline and ours. 
+                  To preserve generation capability after concept erasing, it is essential to maintain high fidelity for remaining concepts 
+                  even when target concepts are included in same text prompts. 
+                  However, baselines often struggle to achieve the fidelity. 
+                  The proposed method, GLoCE, significantly improves this fidelity while demonstrating strong performance in efficacy, specificity, and robustness, 
+                  which are key conditions for effective erasure.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Low-rankedness of Features for a Concept in Diffusion Model</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="500" height="250"
+                      src="./static/figures_GLoCE/figure_low_rankedness.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  To verify the low-rankedness of features for a concept,
+                  we collected embeddings for each layer within diffusion
+                  models from generation of a few images of concepts using SD v1.4. From a few generations of the concept,
+                  we obtained thousands of token embeddings from a single
+                  forward pass of the model and repeated multiple diffusion
+                  timesteps. Then, we analyzed the spectrum of these stacked
+                  embeddings by singular value decomposition (SVD). This figure illustrates the spectrum analysis
+                  of embeddings from diverse concepts. Notably, we observed
+                  that only a small number of singular values are significant
+                  along various concepts.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Closed-form LoRA for Concept Erasing via Principal Components of a Target Concept</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/figure_cf_lora.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  (a) Extraction of principal components for each layer in a
+                      diffusion model by generation of few samples to determine
+                      the low-rank matrices for erasing target concepts. We construct
+                      the mean and primary direction of the distribution of token embeddings of target and surrogate concepts
+                  (b) Closed-form LoRA for concept erasing. It projects the target embeddings to the low-rank subspace of
+                      mapping concepts after removing the information of target concept, inspired by linear guardedness.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Inference-Only Update of Gate to Enhance <br> Efficacy and Specificity</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="400" height="200"
+                      src="./static/figures_GLoCE/figure_gate.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  Gate mechanism to enhance the efficacy for target concepts 
+                  and specificity for remaining concepts. The parameters in the
+                  gate is determined only by generation of few images.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Qualitative Results on Localized Celebs Erasure</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/figure6_ver3.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  Qualitative results of baselines and ours on localized celebrities erasure to evaluate the fidelity of the generated images. It shows that
+                  erasing only one target concept can degrade the fidelity of image containing both target and remaining celebrity on baselines, while GLoCE
+                  effectively erase the region of features of target concepts and successfully preserves the other region.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Quantitative Results on Localized Celebs Erasure</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/table1.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                   Comparison of baselines and the proposed method for image fidelity on text prompts containing target celebrities and remaining celebrities. 
+                   We measured accuracy in percentage and there harmonic mean of efficacy and specificity following MACE
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Qualitative Results on Celebs Erasure <br> for Prompts Only Containing One Concept</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/figure_one_concept.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  Qualitative comparison on celebrities erasure when prompts contain either target or remaining concepts.
+                  To further verify the efficacy and specificity of the proposed method, we evaluated erasure and preservation performance across various domains with prompts only containing either target or remaining concepts.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Quantitative Results on Celebs Erasure <br> for Prompts Only Containing One Concept</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/table2.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  Quantitative results on celebrities erasure. We used CS and GCD accuracy in percentage 
+                  (ACC<sub>t</sub> for target and ACC<sub>r</sub> for remaining concepts). 
+                  We also measured FID for COCO-30K, or KID (scaled by 100) for the other remaining concepts.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results on Artistic Styles Erasure</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/figure7_ver5.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                   Qualitative results of efficacy for target style and fidelity of remaining celebrity along the number of erased targets.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results on Explicit Contents Erasure</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/table3.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  Results of detected number of explicit contents using NudeNet detector on I2P 
+                  and preservation performance on MS-COCO 30K with CS, FID. GLoCE outperforms the efficacy 
+                  on explicit contents by a large margin while achieving the best specificity on COCO-30K.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"> Illustration of Gate Activation Map</h2>
+          <div className="container is-max-desktop">
+              <img id="overview"
+                       width="1200" height="600"
+                      src="./static/figures_GLoCE/appendix_E1_heatmap3.png"
+                      alt={"overview"}>
+              </img>
+
+              <div class="content has-text-justified"> 
+                <p>
+                  Qualitative illustration of gate activation map for target concepts. It shows that the gate is precisely activated on the spatially
+                  local region of target concepts through multiple layers in a diffusion model and DDIM time steps. Through the local activation of gate,
+                  GLoCE can successfully erase the local region of target concepts.
+                </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+      @InProceedings{lee2025gloce,
+          author    = {Lee, Byung Hyun and Lim, Sungjin and Chun, Se Young},
+          title     = {Localized Concept Erasure for Text-to-Image Diffusion Models Using Training-Free Gated Low-Rank Adaptation},
+          booktitle = {CVPR}
+          year      = {2025},
+      }</code></pre>
+  </div>
+</section>
+
+  
+  
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
