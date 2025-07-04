@@ -168,7 +168,7 @@
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
-                      src="./static/figures_GLoCE/figure_intro.png"
+                      src="./static/figures_comel/figure1.png"
                       alt={"overview"}>
               </img>
 
@@ -197,7 +197,7 @@
           <div className="container is-max-desktop">
               <img id="overview"
                        width="500" height="250"
-                      src="./static/figures_GLoCE/figure_low_rankedness.png"
+                      src="./static/figures_comel/figure2.png"
                       alt={"overview"}>
               </img>
 
@@ -230,7 +230,7 @@
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
-                      src="./static/figures_GLoCE/figure_cf_lora.png"
+                      src="./static/figures_comel/figure3.png"
                       alt={"overview"}>
               </img>
 
@@ -260,7 +260,7 @@
           <div className="container is-max-desktop">
               <img id="overview"
                        width="400" height="200"
-                      src="./static/figures_GLoCE/figure_gate.png"
+                      src="./static/figures_comel/figure4.png"
                       alt={"overview"}>
               </img>
 
@@ -290,7 +290,7 @@
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
-                      src="./static/figures_GLoCE/figure6_ver3.png"
+                      src="./static/figures_comel/figure5.png"
                       alt={"overview"}>
               </img>
 
@@ -318,7 +318,7 @@
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
-                      src="./static/figures_GLoCE/table1.png"
+                      src="./static/figures_comel/figure6.png"
                       alt={"overview"}>
               </img>
 
@@ -343,7 +343,7 @@
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
-                      src="./static/figures_GLoCE/figure_one_concept.png"
+                      src="./static/figures_comel/figure7.png"
                       alt={"overview"}>
               </img>
 
@@ -376,7 +376,7 @@
           <div className="container is-max-desktop">
               <img id="overview"
                        width="1200" height="600"
-                      src="./static/figures_GLoCE/table2.png"
+                      src="./static/figures_comel/figure8.png"
                       alt={"overview"}>
               </img>
 
@@ -396,98 +396,14 @@
 
 
 
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Results on Artistic Styles Erasure</h2>
-          <div className="container is-max-desktop">
-              <img id="overview"
-                       width="1200" height="600"
-                      src="./static/figures_GLoCE/figure7_ver5.png"
-                      alt={"overview"}>
-              </img>
-
-              <div class="content has-text-justified"> 
-                <p>
-                   Qualitative results of efficacy for target style and fidelity of remaining celebrity along the number of erased targets.
-                </p>
-              </div>
-          </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Results on Explicit Contents Erasure</h2>
-          <div className="container is-max-desktop">
-              <img id="overview"
-                       width="1200" height="600"
-                      src="./static/figures_GLoCE/table3.png"
-                      alt={"overview"}>
-              </img>
-
-              <div class="content has-text-justified"> 
-                <p>
-                  Results of detected number of explicit contents using NudeNet detector on I2P 
-                  and preservation performance on MS-COCO 30K with CS, FID. GLoCE outperforms the efficacy 
-                  on explicit contents by a large margin while achieving the best specificity on COCO-30K.
-                </p>
-              </div>
-          </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3"> Illustration of Gate Activation Map</h2>
-          <div className="container is-max-desktop">
-              <img id="overview"
-                       width="1200" height="600"
-                      src="./static/figures_GLoCE/appendix_E1_heatmap3.png"
-                      alt={"overview"}>
-              </img>
-
-              <div class="content has-text-justified"> 
-                <p>
-                  Qualitative illustration of gate activation map for target concepts. It shows that the gate is precisely activated on the spatially
-                  local region of target concepts through multiple layers in a diffusion model and DDIM time steps. Through the local activation of gate,
-                  GLoCE can successfully erase the local region of target concepts.
-                </p>
-              </div>
-          </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
     <pre><code>
-      @InProceedings{lee2025gloce,
-          author    = {Lee, Byung Hyun and Lim, Sungjin and Chun, Se Young},
-          title     = {Localized Concept Erasure for Text-to-Image Diffusion Models Using Training-Free Gated Low-Rank Adaptation},
-          booktitle = {CVPR}
+      @inproceedings{lee2025gloce,
+          author    = {Lee, Byung Hyun and Jeong, Wongi and Han, Woojae and Lee, Kyoungbun and Chun, Se Young},
+          title     = {Continual Multiple Instance Learning with Enhanced Localization for Histopathological Whole Slide Image Analysis},
+          booktitle = {ICCV}
           year      = {2025},
       }</code></pre>
   </div>
